@@ -1,0 +1,64 @@
+﻿<Window x:Class="BookLibraryApp.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="Библиотека книг" Height="600" Width="800">
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="300"/>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
+
+        <!-- TreeView для иерархии -->
+        <TreeView x:Name="TreeViewBooks" SelectedItemChanged="TreeViewBooks_SelectedItemChanged"
+                  PreviewMouseLeftButtonDown="TreeViewBooks_PreviewMouseLeftButtonDown"
+                  PreviewMouseMove="TreeViewBooks_PreviewMouseMove"
+                  Drop="TreeViewBooks_Drop">
+            <TreeView.Resources>
+                <HierarchicalDataTemplate DataType="{x:Type local:Genre}" ItemsSource="{Binding Series}">
+                    <StackPanel>
+                        <TextBlock Text="{Binding GenreName}" />
+                        <TextBlock.ContextMenu>
+                            <ContextMenu>
+                                <MenuItem Header="Редактировать" Click="EditGenre_Click"/>
+                                <MenuItem Header="Удалить" Click="DeleteGenre_Click"/>
+                            </ContextMenu>
+                        </TextBlock.ContextMenu>
+                    </StackPanel>
+                </HierarchicalDataTemplate>
+
+                <HierarchicalDataTemplate DataType="{x:Type local:Series}" ItemsSource="{Binding Books}">
+                    <StackPanel>
+                        <TextBlock Text="{Binding SeriesName}" />
+                        <TextBlock.ContextMenu>
+                            <ContextMenu>
+                                <MenuItem Header="Редактировать" Click="EditSeries_Click"/>
+                                <MenuItem Header="Удалить" Click="DeleteSeries_Click"/>
+                            </ContextMenu>
+                        </TextBlock.ContextMenu>
+                    </StackPanel>
+                </HierarchicalDataTemplate>
+
+                <DataTemplate DataType="{x:Type local:Book}">
+                    <StackPanel>
+                        <TextBlock Text="{Binding Title}" />
+                        <TextBlock.ContextMenu>
+                            <ContextMenu>
+                                <MenuItem Header="Редактировать" Click="EditBook_Click"/>
+                                <MenuItem Header="Удалить" Click="DeleteBook_Click"/>
+                            </ContextMenu>
+                        </TextBlock.ContextMenu>
+                    </StackPanel>
+                </DataTemplate>
+            </TreeView.Resources>
+        </TreeView>
+
+
+        <!-- Кнопки управления -->
+        <StackPanel Grid.Column="1" Margin="10">
+            <Button x:Name="AdminButton" Content="Администрирование" Click="OpenAdminWindow_Click" Visibility="Collapsed" Margin="5"/>
+            <Button Content="Добавить жанр" Click="AddGenre_Click"/>
+            <Button Content="Добавить серию" Click="AddSeries_Click"/>
+            <Button Content="Добавить книгу" Click="AddBook_Click"/>
+        </StackPanel>
+    </Grid>
+</Window>

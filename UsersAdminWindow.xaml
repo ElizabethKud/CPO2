@@ -1,0 +1,33 @@
+﻿<Window x:Class="BookLibraryApp.UsersAdminWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="Управление пользователями" Height="400" Width="600">
+    <Grid Margin="10">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+
+        <ListView x:Name="UsersListView">
+            <ListView.View>
+                <GridView>
+                    <GridViewColumn Header="Логин" DisplayMemberBinding="{Binding Username}" Width="150"/>
+                    <GridViewColumn Header="Роль" DisplayMemberBinding="{Binding Role}" Width="100"/>
+                    <GridViewColumn Header="Дата регистрации" DisplayMemberBinding="{Binding RegistrationDate}" Width="150"/>
+                    <GridViewColumn Header="Активен">
+                        <GridViewColumn.CellTemplate>
+                            <DataTemplate>
+                                <CheckBox IsChecked="{Binding IsActive, Mode=TwoWay}" Click="ToggleActive_Click"/>
+                            </DataTemplate>
+                        </GridViewColumn.CellTemplate>
+                    </GridViewColumn>
+                </GridView>
+            </ListView.View>
+        </ListView>
+
+        <StackPanel Grid.Row="1" Orientation="Horizontal" HorizontalAlignment="Right" Margin="10">
+            <Button Content="Удалить" Click="DeleteUser_Click" Margin="5"/>
+            <Button Content="Закрыть" Click="Close_Click" Margin="5"/>
+        </StackPanel>
+    </Grid>
+</Window>
