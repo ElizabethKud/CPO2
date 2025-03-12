@@ -1,4 +1,4 @@
-﻿<Window x:Class="BookLibraryApp.UsersAdminWindow"
+﻿<Window x:Class="CPO2.Views.UsersAdminWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         Title="Управление пользователями" Height="400" Width="600">
@@ -8,7 +8,8 @@
             <RowDefinition Height="Auto"/>
         </Grid.RowDefinitions>
 
-        <ListView x:Name="UsersListView">
+        <!-- Список пользователей -->
+        <ListView x:Name="UsersListView" ItemsSource="{Binding Users}">
             <ListView.View>
                 <GridView>
                     <GridViewColumn Header="Логин" DisplayMemberBinding="{Binding Username}" Width="150"/>
@@ -17,7 +18,9 @@
                     <GridViewColumn Header="Активен">
                         <GridViewColumn.CellTemplate>
                             <DataTemplate>
-                                <CheckBox IsChecked="{Binding IsActive, Mode=TwoWay}" Click="ToggleActive_Click"/>
+                                <CheckBox IsChecked="{Binding IsActive, Mode=TwoWay}"
+                                          Command="{Binding DataContext.ToggleActiveCommand, RelativeSource={RelativeSource AncestorType=Window}}"
+                                          CommandParameter="{Binding}"/>
                             </DataTemplate>
                         </GridViewColumn.CellTemplate>
                     </GridViewColumn>
@@ -25,8 +28,9 @@
             </ListView.View>
         </ListView>
 
+        <!-- Кнопки управления -->
         <StackPanel Grid.Row="1" Orientation="Horizontal" HorizontalAlignment="Right" Margin="10">
-            <Button Content="Удалить" Click="DeleteUser_Click" Margin="5"/>
+            <Button Content="Удалить" Command="{Binding DeleteUserCommand}" Margin="5"/>
             <Button Content="Закрыть" Click="Close_Click" Margin="5"/>
         </StackPanel>
     </Grid>

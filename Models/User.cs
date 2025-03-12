@@ -9,3 +9,4 @@ public class User
     public DateTime RegistrationDate { get; set; } = DateTime.UtcNow;
     public bool IsActive { get; set; } = true;
 }
+
